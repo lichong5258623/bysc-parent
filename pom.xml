@@ -41,6 +41,7 @@
         <module>bysc-eurekaserver</module>
         <module>bysc-provider</module>
         <module>bysc-consumer</module>
+        <module>bys-api</module>
     </modules>
 
     <build>

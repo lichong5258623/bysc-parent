@@ -2,8 +2,21 @@ server:
   port: 10031
 spring:
   application:
-    name: byscProvider
+    name: byscProvider #  提供的微服务名字
 eureka:
   client:
     service-url:
-      defaultZone: http://localhost:8761/eureka
+      defaultZone: http://localhost:8761/eureka #eureka注册地址
+  instance:
+    instance-id: byscProvider-10031 #修改微服务机器显示名
+    prefer-ip-address: true #访问信息提示ip
+
+#微服务info路径信息
+info:
+  app.name: ${spring.application.name}
+  build:
+    artifactId: $project.artifactId$
+    version: $project.version$
+  author:
+    name: 李崇
+    time: 2018-11-11 17:46:23

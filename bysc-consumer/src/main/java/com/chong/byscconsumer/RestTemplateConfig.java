@@ -1,5 +1,6 @@
 package com.chong.byscconsumer;
 
+import org.springframework.cloud.client.loadbalancer.LoadBalanced;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.client.ClientHttpRequestFactory;
@@ -21,16 +22,23 @@ import java.util.List;
 @Configuration
 public class RestTemplateConfig {
 
-
+    /**
+     * LoadBalanced实现负载均衡（客户端）
+     */
     @Bean
-    public RestTemplate restTemplate(ClientHttpRequestFactory factory) {
-        RestTemplate restTemplate = new RestTemplate(factory);
+    @LoadBalanced
+    public RestTemplate restTemplate(ClientHttpRequestFactory clientHttpRequestFactory) {
+        RestTemplate restTemplate = new RestTemplate(clientHttpRequestFactory);
         List<HttpMessageConverter<?>> messageConverters = restTemplate.getMessageConverters();
         messageConverters.remove(1);
         messageConverters.add(1,new StringHttpMessageConverter(Charset.forName("UTF-8")));
         return restTemplate;
     }
 
+    /**
+     * restTemplate的提供者（okHttp,httpClient等等）
+     * @return 客户端工厂
+     */
     @Bean
     public ClientHttpRequestFactory clientHttpRequestFactory() {
         SimpleClientHttpRequestFactory factory = new SimpleClientHttpRequestFactory();
